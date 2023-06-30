@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Sign Up and Sign In</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 20px;
+    }
+
+    h1 {
+      text-align: center;
+    }
+
+    h2 {
+      margin-top: 40px;
+    }
+
+    form {
+      width: 300px;
+      margin: 20px auto;
+      padding: 20px;
+      background: #f2f2f2;
+      border-radius: 5px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 10px;
+    }
+
+    input[type="text"],
+    input[type="password"] {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 20px;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+    }
+
+    input[type="submit"] {
+      width: 100%;
+      padding: 10px;
+      background: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 3px;
+      cursor: pointer;
+    }
+
+    input[type="submit"]:hover {
+      background: #45a049;
+    }
+  </style>
+</head>
+<body>
+  <h1>Welcome to My Website</h1>
+
+  <h2>Sign Up</h2>
+  <form id="signup-form">
+    <label for="signup-username">Username:</label>
+    <input type="text" id="signup-username" name="signup-username" required><br>
+
+    <label for="signup-password">Password:</label>
+    <input type="password" id="signup-password" name="signup-password" required><br>
+
+    <input type="submit" value="Sign Up">
+  </form>
+
+  <h2>Sign In</h2>
+  <form id="signin-form">
+    <label for="signin-username">Username:</label>
+    <input type="text" id="signin-username" name="signin-username" required><br>
+
+    <label for="signin-password">Password:</label>
+    <input type="password" id="signin-password" name="signin-password" required><br>
+
+    <input type="submit" value="Sign In">
+  </form>
+
+  <!-- Add Firebase SDK and configuration -->
+  <script src="https://www.gstatic.com/firebasejs/8.7.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.7.0/firebase-auth.js"></script>
+  <script>
+    // Initialize Firebase
+    var firebaseConfig = {
+      apiKey: "YOUR_API_KEY",
+      authDomain: "YOUR_AUTH_DOMAIN",
+      projectId: "YOUR_PROJECT_ID",
+      // ... other Firebase configuration options
+    };
+    firebase.initializeApp(firebaseConfig);
+
+    // Handle sign up form submission
+    document.getElementById("signup-form").addEventListener("submit", function(event) {
+      event.preventDefault(); // Prevent form from submitting normally
+
+      var username = document.getElementById("signup-username").value;
+      var password = document.getElementById("signup-password").value;
+
+      firebase.auth().createUserWithEmailAndPassword(username, password)
+        .then(function(user) {
+          console.log("User signed up successfully:", user);
+          // Redirect or show success message
+        })
+        .catch(function(error) {
+          console.error("Sign up error:", error);
+          // Display error message to the user
+        });
+    });
+
+    // Handle sign in form submission
+    document.getElementById("signin-form").addEventListener("submit", function(event) {
+      event.preventDefault(); // Prevent form from submitting normally
+
+      var username = document.getElementById("signin-username").value;
+      var password = document.getElementById("signin-password").value;
+
+      firebase.auth().signInWithEmailAndPassword(username, password)
+        .then(function(user) {
+          console.log("User signed in successfully:", user);
+          // Redirect or show success message
+        })
+        .catch(function(error) {
+          console.error("Sign in error:", error);
+          // Display error message to the user
+        });
+    });
+  </script>
+</body>
+</html>
